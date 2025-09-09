@@ -5,7 +5,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <View className="flex-1 justify-center items-center p-4 space-y-4">
+    <View className="flex-1 justify-center items-center p-4 space-y-4 gap-2">
       <Text className="text-2xl font-bold mb-6">
         Ellatech Frontend Assignment
       </Text>

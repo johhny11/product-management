@@ -38,7 +38,7 @@ export default function RegisterProductPage() {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
 
-  // Add product handler
+  // product handler
   const handleAddProduct = () => {
     if (!sku || !name || !price || !quantity) {
       alert("Please fill in all fields");
@@ -84,7 +84,7 @@ export default function RegisterProductPage() {
     page * PAGE_SIZE
   );
 
-  // Adjust stock handler
+  // stock handler
   const adjustStock = (product: Product, type: "add" | "remove") => {
     const qty = parseInt(qtyInputs[product.id] || "0");
     if (isNaN(qty) || qty <= 0) {
@@ -122,7 +122,6 @@ export default function RegisterProductPage() {
 
   return (
     <ScrollView className="flex-1 p-4">
-      {/* Styled Product Registration Form */}
       <View className="p-4 bg-white rounded-lg shadow-md mb-6">
         <Text className="text-lg font-bold mb-2">Register Product</Text>
         <TextInput
@@ -166,56 +165,60 @@ export default function RegisterProductPage() {
           <Text className="text-gray-500">No products registered yet.</Text>
         )}
 
-        {/* Table Header */}
-        {products.length > 0 && (
-          <View className="flex-row bg-gray-100 p-2 rounded-t">
-            <Text className="flex font-bold">Name</Text>
-            <Text className="flex font-bold">SKU</Text>
-            <Text className="w-16 font-bold text-center">Price</Text>
-            <Text className="w-20 font-bold text-center">Quantity</Text>
-            <Text className="flex font-bold text-center">Last Updated</Text>
-            <Text className="w-36 font-bold text-center">Stock</Text>
-          </View>
-        )}
+        <ScrollView horizontal showsHorizontalScrollIndicator={true}>
+          <View>
+            {/* Table Header */}
+            {products.length > 0 && (
+              <View className="flex-row bg-gray-100 p-2 rounded-t min-w-[700px]">
+                <Text className="w-32 font-bold">Name</Text>
+                <Text className="w-32 font-bold">SKU</Text>
+                <Text className="w-20 font-bold text-center">Price</Text>
+                <Text className="w-24 font-bold text-center">Quantity</Text>
+                <Text className="w-32 font-bold text-center">Last Updated</Text>
+                <Text className="w-44 font-bold text-center">Stock</Text>
+              </View>
+            )}
 
-        {/* Table Rows */}
-        {paginatedProducts.map((product) => (
-          <View
-            key={product.id}
-            className="flex-row items-center border-b border-gray-200 p-2 bg-white"
-          >
-            <Text className="flex-1">{product.name}</Text>
-            <Text className="flex-1">{product.sku}</Text>
-            <Text className="w-16 text-center">${product.price}</Text>
-            <Text className="w-20 text-center">{product.quantity}</Text>
-            <Text className="flex-1 text-xs text-gray-400 text-center">
-              {new Date(product.lastUpdated).toLocaleDateString()}
-            </Text>
-            <View className="w-36 flex-row items-center space-x-1">
-              <TextInput
-                className="border border-gray-300 rounded px-2 py-1 w-12 mr-1"
-                placeholder="Qty"
-                keyboardType="numeric"
-                value={qtyInputs[product.id] || ""}
-                onChangeText={(text) =>
-                  setQtyInputs((prev) => ({ ...prev, [product.id]: text }))
-                }
-              />
-              <TouchableOpacity
-                className="bg-green-500 px-2 py-1 rounded"
-                onPress={() => adjustStock(product, "add")}
+            {/* Table Rows */}
+            {paginatedProducts.map((product) => (
+              <View
+                key={product.id}
+                className="flex-row items-center border-b border-gray-200 p-2 bg-white min-w-[700px]"
               >
-                <Text className="text-white font-bold text-xs">Add</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className="bg-red-500 px-2 py-1 rounded ml-1"
-                onPress={() => adjustStock(product, "remove")}
-              >
-                <Text className="text-white font-bold text-xs">Remove</Text>
-              </TouchableOpacity>
-            </View>
+                <Text className="w-32">{product.name}</Text>
+                <Text className="w-32">{product.sku}</Text>
+                <Text className="w-20 text-center">${product.price}</Text>
+                <Text className="w-24 text-center">{product.quantity}</Text>
+                <Text className="w-32 text-xs text-gray-400 text-center">
+                  {new Date(product.lastUpdated).toLocaleDateString()}
+                </Text>
+                <View className="w-44 flex-row items-center space-x-1">
+                  <TextInput
+                    className="border border-gray-300 rounded px-2 py-1 w-12 mr-1"
+                    placeholder="Qty"
+                    keyboardType="numeric"
+                    value={qtyInputs[product.id] || ""}
+                    onChangeText={(text) =>
+                      setQtyInputs((prev) => ({ ...prev, [product.id]: text }))
+                    }
+                  />
+                  <TouchableOpacity
+                    className="bg-green-500 px-2 py-1 rounded"
+                    onPress={() => adjustStock(product, "add")}
+                  >
+                    <Text className="text-white font-bold text-xs">Add</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="bg-red-500 px-2 py-1 rounded ml-1"
+                    onPress={() => adjustStock(product, "remove")}
+                  >
+                    <Text className="text-white font-bold text-xs">Remove</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
           </View>
-        ))}
+        </ScrollView>
 
         {/* Pagination Controls */}
         {products.length > PAGE_SIZE && (
@@ -241,7 +244,7 @@ export default function RegisterProductPage() {
         )}
       </View>
 
-      {/* Transaction History Button */}
+      {/* Transaction History */}
       <View className="mt-8 mb-2 self-start pl-[10px]">
         <TouchableOpacity
           className="bg-purple-500 px-4 py-2 rounded"
@@ -253,7 +256,6 @@ export default function RegisterProductPage() {
         </TouchableOpacity>
       </View>
 
-      {/* Transaction History (Shown only if toggled) */}
       {showHistory && transactions.length > 0 && (
         <View className="mt-2">
           <Text className="text-xl font-bold mb-2">Transaction History</Text>
