@@ -21,9 +21,7 @@ export default function Home() {
         className="bg-green-500 p-4 rounded w-full"
         onPress={() => router.push("/products/register")}
       >
-        <Text className="text-white text-center font-bold">
-          Register Product
-        </Text>
+        <Text className="text-white text-center font-bold">Products</Text>
       </TouchableOpacity>
     </View>
   );
